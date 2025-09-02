@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    {% include 'core/navbar.html' %}
+
+    <div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow rounded">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">📞 Contact Us</h1>
+        <p class="text-gray-600 mb-6">You can reach out to us at <strong>jobcoursehub@gmail.com</strong>.</p>
+        
+        <form action="{% url 'contact' %}" method="post" class="space-y-4">
+            {% csrf_token %}
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" name="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                <input type="tel" id="phone" name="phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                <textarea id="message" name="message" rows="5" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+            </div>
+            <div>
+                <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Send Message</button>
+            </div>
+        </form>
+    </div>
+
+    <footer class="bg-gray-800 text-white mt-10 py-6">
+        <div class="max-w-4xl mx-auto px-6">
+            <p class="text-center">© 2025 JobCourseHub. All rights reserved.</p>
+            <p class="text-center mt-2">Contact us at <a href="mailto:support@jobcoursehub.com" class="underline hover:text-indigo-300">support@jobcoursehub.com</a></p>
+        </div>
+    </footer>
+</body>
+</html>

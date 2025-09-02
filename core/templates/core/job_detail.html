@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ job.title }} - {{ job.company }}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-xl p-8">
+    
+    <!-- Header -->
+    <div class="flex items-center space-x-4 mb-6">
+      {% if job.logo %}
+        <img src="{{ job.logo.url }}" alt="{{ job.company }}" class="w-16 h-16 object-contain rounded border" />
+      {% endif %}
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">{{ job.title }}</h1>
+        <p class="text-gray-600">{{ job.company }}</p>
+        <p class="text-sm text-gray-400 mt-1">Posted on {{ job.posted_at|date:"F j, Y" }}</p>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold text-gray-800 mb-2">Job Description</h2>
+      <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ job.description }}</p>
+    </div>
+
+    <!-- Responsibilities -->
+    <div class="mb-6">
+      <h2 class="text-lg font-semibold text-gray-800 mb-2">Responsibilities</h2>
+      <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ job.responsibilities }}</p>
+    </div>
+
+    <!-- Skills -->
+    <div class="mb-8">
+      <h2 class="text-lg font-semibold text-gray-800 mb-2">Skills Required</h2>
+      <ul class="list-disc list-inside text-gray-700">
+        {% for skill in skills %}
+          <li>{{ skill }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex space-x-4">
+      <a href="{{ job.apply_link }}" target="_blank"
+         class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
+        Apply Now
+      </a>
+      <a href="{% url 'job_list' %}"
+         class="bg-gray-300 text-gray-800 px-6 py-3 rounded hover:bg-gray-400 transition">
+        Home Page
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>
