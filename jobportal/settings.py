@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'storages',  # for S3 storage
     'whitenoise.runserver_nostatic',
     'corsheaders',
 ]
@@ -70,24 +71,36 @@ DATABASES = {
 
 # Static files (served via WhiteNoise)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]  # optional: local static files
-STATIC_ROOT = BASE_DIR / 'staticfiles'    # collectstatic will put files here
+STATICFILES_DIRS = [BASE_DIR / "static"]  # local static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Media files (uploads)
+if DEBUG:
+    # Local storage for development
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    # S3 storage for production
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = 'jobifyworld'
+    AWS_S3_REGION_NAME = 'eu-north-1'
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_DEFAULT_ACL = None
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+    AWS_QUERYSTRING_AUTH = False  # so media URLs are public
 
-# AWS S3 Storage for media (uploads)
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = 'jobifyworld'
-AWS_S3_REGION_NAME = 'eu-north-1'
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL = None
-AWS_S3_VERIFY = True
-AWS_S3_SIGNATURE_VERSION = 's3v4'
+    DEFAULT_FILE_STORAGE = 'jobportal.settings.MediaStorage'
+    MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
 
-# Use S3 for all media storage
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/media/'
+    # Optional: define a media folder in S3
+    from storages.backends.s3boto3 import S3Boto3Storage
+
+    class MediaStorage(S3Boto3Storage):
+        location = 'media'
+        file_overwrite = False
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -103,10 +116,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Allow all domains (for testing, not recommended in production)
+# CORS settings
 CORS_ALLOW_ALL_ORIGINS = False
-
-# Or allow specific domains
 CORS_ALLOWED_ORIGINS = [
     "https://jobifyworld.com",
     "https://www.jobifyworld.com",
