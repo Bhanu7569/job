@@ -1,12 +1,11 @@
-{% load static %}
-<nav class="bg-white shadow p-4 flex items-center justify-between">
-    <div class="flex items-center space-x-3">
-      
-        <span class="text-2xl font-bold text-blue-600">JobCourseHub</span>
-    </div>
+<a href="{% url 'job_list' %}" 
+   class="hover:text-blue-600 transition" 
+   onclick="gtag('event', 'click', { 'event_category': 'Navbar', 'event_label': 'Jobs' });">
+   Jobs
+</a>
 
-    <div class="space-x-4 text-gray-700 font-medium">
-        <a href="{% url 'job_list' %}" class="hover:text-blue-600 transition">Jobs</a>
-        <a href="{% url 'contact' %}" class="hover:text-blue-600 transition">Contact</a>
-    </div>
-</nav>
+<a href="{% url 'contact' %}" 
+   class="hover:text-blue-600 transition" 
+   onclick="gtag('event', 'click', { 'event_category': 'Navbar', 'event_label': 'Contact' });">
+   Contact
+</a>
