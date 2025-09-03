@@ -1,13 +1,136 @@
+ {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jobifyworld</title>
+
+  
+  <link rel="icon" type="image/x-icon" href="{% static 'logo.png' %}">
+
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    }
+  </script>
 </head>
-<body>
-  <h1>
-    Welcome, to my website My name is Bhanu Prakash
-  </h1>
+<body class="bg-gray-50 font-sans antialiased">
+
+
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
+      <span class="text-2xl font-bold text-blue-700">jobifyworld</span>
+      <div class="hidden md:flex items-center space-x-6">
+        <a href="{% url 'job_list' %}" class="text-gray-700 hover:text-blue-600 font-medium">Jobs</a>
+        <a href="{% url 'contact' %}" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+      </div>
+      <div class="md:hidden">
+        <button onclick="toggleMenu()" class="text-gray-700 focus:outline-none">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden hidden bg-white shadow">
+      <a href="{% url 'job_list' %}" class="block py-2 px-4 text-gray-700 hover:text-blue-600">Jobs</a>
+      <a href="{% url 'contact' %}" class="block py-2 px-4 text-gray-700 hover:text-blue-600">Contact</a>
+    </div>
+  </nav>
+
+ 
+  <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h1 class="text-4xl sm:text-5xl font-extrabold mb-4">Discover Your Next Career Opportunity</h1>
+      <p class="text-lg mb-8">Explore jobs and apply easily through jobifyworld.</p>
+      <form action="{% url 'job_list' %}" method="get" class="flex flex-col sm:flex-row justify-center gap-4">
+        <input type="text" name="search" placeholder="Search by job title or company"
+          class="w-full sm:w-96 p-4 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-sm" />
+        <button type="submit"
+          class="bg-white text-blue-700 px-6 py-4 rounded-lg font-semibold hover:bg-blue-100 transition duration-300">
+          Find Jobs
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
+    {% if jobs %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for job in jobs %}
+        <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition duration-300 hover:-translate-y-1 flex flex-col justify-between">
+          {% if job.logo %}
+            <img src="{{ job.logo.url }}" alt="{{ job.company }}" class="h-12 mb-4 object-contain"/>
+          {% endif %}
+
+          <div class="mb-4">
+            <a href="{% url 'job_detail' job.slug %}" class="text-xl font-semibold text-gray-800 hover:text-blue-600">
+              {{ job.title }}
+            </a>
+            <p class="text-gray-600 mb-1"><span class="font-medium text-blue-600">Company:</span> {{ job.company }}</p>
+            <p class="text-sm text-gray-500">Posted on: {{ job.posted_at|date:"F j, Y" }}</p>
+          </div>
+
+          <div class="mt-auto">
+            <a href="{% url 'job_detail' job.slug %}" class="inline-block w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-center hover:bg-blue-700 transition duration-300">
+              Full Job Details
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if jobs.has_other_pages %}
+        <div class="mt-10 flex justify-center space-x-2">
+          {% if jobs.has_previous %}
+            <a href="?page={{ jobs.previous_page_number }}" class="px-4 py-2 bg-gray-200 rounded hover:bg-blue-100 transition">Previous</a>
+          {% endif %}
+          {% for num in jobs.paginator.page_range %}
+            {% if jobs.number == num %}
+              <span class="px-4 py-2 bg-blue-600 text-white rounded">{{ num }}</span>
+            {% else %}
+              <a href="?page={{ num }}" class="px-4 py-2 bg-gray-100 rounded hover:bg-blue-100 transition">{{ num }}</a>
+            {% endif %}
+          {% endfor %}
+          {% if jobs.has_next %}
+            <a href="?page={{ jobs.next_page_number }}" class="px-4 py-2 bg-gray-200 rounded hover:bg-blue-100 transition">Next</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <p class="text-center text-gray-500 text-lg mt-10">No jobs available at the moment.</p>
+    {% endif %}
+  </section>
+
+  
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 px-4">
+      <div>
+        <h3 class="text-lg font-semibold mb-4">jobifyworld</h3>
+        <p class="text-gray-300">Find jobs and grow your career with the right skills and opportunities.</p>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2 text-gray-300">
+          <li><a href="{% url 'job_list' %}" class="hover:text-blue-400 transition">Jobs</a></li>
+          <li><a href="{% url 'contact' %}" class="hover:text-blue-400 transition">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Contact</h3>
+        <p class="text-gray-300">support@jobifyworld.com</p>
+      </div>
+    </div>
+    <div class="mt-8 text-center text-gray-400 text-sm">© 2025 jobifyworld. All rights reserved.</div>
+  </footer>
+
 </body>
-</html>
+</html> 
+
+
+
