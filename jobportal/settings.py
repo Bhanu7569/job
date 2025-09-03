@@ -66,11 +66,12 @@ DATABASES = {
     }
 }
 
-# Static files (served locally with WhiteNoise)
+# Static files (served via WhiteNoise)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / "static"]  # optional: local static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'    # collectstatic will put files here
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # AWS S3 Storage for media (uploads)
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
