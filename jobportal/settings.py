@@ -21,9 +21,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'whitenoise.runserver_nostatic',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # must be first
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -100,3 +102,12 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+# Allow all domains (for testing, not recommended in production)
+CORS_ALLOW_ALL_ORIGINS = False
+
+# Or allow specific domains
+CORS_ALLOWED_ORIGINS = [
+    "https://jobifyworld.com",
+    "https://www.jobifyworld.com",
+]
