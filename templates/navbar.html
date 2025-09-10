@@ -1,11 +1,13 @@
-<a href="{% url 'job_list' %}" 
-   class="hover:text-blue-600 transition" 
-   onclick="gtag('event', 'click', { 'event_category': 'Navbar', 'event_label': 'Jobs' });">
-   Jobs
-</a>
+<div class="flex space-x-6">
+    <a href="{% url 'job_list' %}" 
+       class="hover:text-blue-600 transition" 
+       onclick="gtag('event', 'click', { 'event_category': 'Navbar', 'event_label': 'Jobs' });">
+       Home
+    </a>
 
-<a href="{% url 'contact' %}" 
-   class="hover:text-blue-600 transition" 
-   onclick="gtag('event', 'click', { 'event_category': 'Navbar', 'event_label': 'Contact' });">
-   Contact
-</a>
+    <a href="{% url 'contact' %}" 
+       class="hover:text-blue-600 transition" 
+       onclick="gtag('event', 'click', { 'event_category': 'Navbar', 'event_label': 'Contact' });">
+       Contact
+    </a>
+</div>

@@ -9,7 +9,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-local-dev-secret-key')
 DEBUG = os.environ.get('DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['jobifyworld.com', 'www.jobifyworld.com', '16.170.219.229']
+ALLOWED_HOSTS = [
+    'jobifyworld.com',
+    'www.jobifyworld.com',
+    '16.170.219.229',
+    '127.0.0.1',
+    'localhost'
+]
+
 
 # Application definition
 INSTALLED_APPS = [
