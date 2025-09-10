@@ -27,9 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'storages',  # for S3 storage
+    'storages',  
     'whitenoise.runserver_nostatic',
     'corsheaders',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
