@@ -10,7 +10,8 @@ class StaticViewSitemap(Sitemap):
         return ['job_list', 'contact']
 
     def location(self, item):
-        return reverse(item)
+        # Use full www URL for canonical purposes
+        return f"https://www.jobifyworld.com{reverse(item)}"
 
 class JobPostSitemap(Sitemap):
     changefreq = "daily"
@@ -20,4 +21,5 @@ class JobPostSitemap(Sitemap):
         return JobPost.objects.all()
 
     def location(self, obj):
-        return reverse('job_detail', args=[obj.slug])
+        # Use full www URL for canonical purposes
+        return f"https://www.jobifyworld.com{reverse('job_detail', args=[obj.slug])}"
