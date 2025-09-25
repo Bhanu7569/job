@@ -32,3 +32,6 @@ class JobPost(models.Model):
 
     def __str__(self):
         return f"{self.title} at {self.company}"
+
+    def get_absolute_url(self):
+        return f"/job_detail/{self.slug}/"  # path only, not full domain
