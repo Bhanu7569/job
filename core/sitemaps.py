@@ -23,3 +23,7 @@ class JobPostSitemap(Sitemap):
     def location(self, obj):
         # Use full www URL for canonical purposes
         return f"https://www.jobifyworld.com{reverse('job_detail', args=[obj.slug])}"
+    
+    def lastmod(self, obj):
+        # Use posted_at as last modified date
+        return obj.posted_at
