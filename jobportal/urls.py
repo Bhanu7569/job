@@ -2,9 +2,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from core.sitemaps import StaticViewSitemap, JobPostSitemap  # use 'core', not 'jobs'
+from core import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
+
 
 # Define sitemaps
 sitemaps = {

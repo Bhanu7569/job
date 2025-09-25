@@ -43,7 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-     'project.middleware.WwwRedirectMiddleware',
+    'jobportal.middleware.WwwRedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'jobportal.urls'

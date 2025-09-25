@@ -1,5 +1,5 @@
 """
-ASGI config for jobportal project.
+ASGI config for jobportal jobportal.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
